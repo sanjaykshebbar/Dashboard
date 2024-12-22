@@ -23,6 +23,17 @@ A simple and modern web application built using **Flask** and **Socket.IO** to m
 
 ---
 
+## Repos:
+1. Git Repo 2: https://github.com/DotDev-Sudo/Dashboard
+2. Git Repo 2: https://github.com/sanjaykshebbar/Dashboard
+3. Docker Image: https://hub.docker.com/r/sanjaykshebbar/add-board
+
+---
+## More Information and comparison of this tool:
+
+https://docs.google.com/document/d/1kKM8m7qLkr5Qdq7YP_EUZ8ehRRQx9t87wViwPuE8dRE/edit?tab=t.0
+
+
 ## Technologies Used
 
 - **Flask**: Lightweight Python web framework for routing, session management, and serving HTML templates.
@@ -118,4 +129,5 @@ Once logged in, you can:
 - **Upload media**: Add new MP4 or JPG files to the media library.
 - **Delete media**: Remove existing media files from the system.
 
-
+###NOTE:
+This tool will automatically fetches the updated media content and get that displayed, where there is no manual intervention needed here.
