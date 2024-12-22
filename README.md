@@ -129,5 +129,5 @@ Once logged in, you can:
 - **Upload media**: Add new MP4 or JPG files to the media library.
 - **Delete media**: Remove existing media files from the system.
 
-###NOTE:
+### NOTE:
 This tool will automatically fetches the updated media content and get that displayed, where there is no manual intervention needed here.
