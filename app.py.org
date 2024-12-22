@@ -1,0 +1,87 @@
+from flask import Flask, render_template, send_from_directory, request, jsonify
+from flask_socketio import SocketIO, emit
+import os
+import random
+import hashlib
+
+app = Flask(__name__)
+socketio = SocketIO(app)  # Initialize SocketIO
+
+# Directory where media files are stored
+MEDIA_FOLDER = 'media'
+
+# Ensure the media folder exists
+if not os.path.exists(MEDIA_FOLDER):
+    os.makedirs(MEDIA_FOLDER)
+
+# Function to list files in the media folder (both images and videos)
+def get_media_files():
+    media_files = {'images': [], 'videos': []}
+    
+    for filename in os.listdir(MEDIA_FOLDER):
+        filepath = os.path.join(MEDIA_FOLDER, filename)
+        
+        if filename.endswith('.jpg') or filename.endswith('.jpeg'):
+            media_files['images'].append(filename)
+        
+        elif filename.endswith('.mp4'):
+            media_files['videos'].append(filename)
+    
+    return media_files
+
+# Route to the main dashboard (index page)
+@app.route('/')
+def index():
+    media_files = get_media_files()
+    random.shuffle(media_files['images'])
+    random.shuffle(media_files['videos'])
+    
+    return render_template('index.html', media_files=media_files)
+
+# Route to the content management page (upload and manage files)
+@app.route('/manage')
+def manage():
+    return render_template('manage.html')
+
+# Route to upload a new media file (image or video)
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    file = request.files.get('file')
+    if file:
+        file_path = os.path.join(MEDIA_FOLDER, file.filename)
+        file.save(file_path)
+        
+        # Emit an event to the client that new media has been uploaded
+        socketio.emit('media_uploaded', {'message': 'New media uploaded!'})
+        
+        return jsonify({'status': 'success', 'message': 'File uploaded successfully.'}), 200
+    return jsonify({'status': 'error', 'message': 'No file provided.'}), 400
+
+# Route to delete a media file
+@app.route('/delete/<filename>', methods=['DELETE'])
+def delete_file(filename):
+    file_path = os.path.join(MEDIA_FOLDER, filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        
+        # Emit an event to the client that media has been deleted
+        socketio.emit('media_deleted', {'message': f'{filename} deleted!'})
+        
+        return jsonify({'status': 'success', 'message': f'File {filename} deleted.'}), 200
+    return jsonify({'status': 'error', 'message': 'File not found.'}), 404
+
+# Route to serve media files (images and videos)
+@app.route('/media/<filename>')
+def media(filename):
+    return send_from_directory(MEDIA_FOLDER, filename)
+
+# Route to get the list of media files
+@app.route('/media-list', methods=['GET'])
+def list_media():
+    media_files = get_media_files()
+    return jsonify({'media_files': media_files})
+
+# Run the app with SocketIO
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True, allow_unsafe_werkzeug=True)
+
