@@ -18,7 +18,8 @@ A simple and modern web application built using **Flask** and **Socket.IO** to m
 
 ## Demo
 
-![Demo](./demo_image.jpg) 
+[Watch the video on YouTube](https://www.youtube.com/watch?v=ptQf5dLq04k)
+
 
 ---
 
