@@ -24,7 +24,7 @@ A simple and modern web application built using **Flask** and **Socket.IO** to m
 ---
 
 ## Repos:
-1. Git Repo 2: https://github.com/DotDev-Sudo/Dashboard
+1. Git Repo 1: https://github.com/DotDev-Sudo/Dashboard
 2. Git Repo 2: https://github.com/sanjaykshebbar/Dashboard
 3. Docker Image: https://hub.docker.com/r/sanjaykshebbar/add-board
 
@@ -43,8 +43,6 @@ https://docs.google.com/document/d/1kKM8m7qLkr5Qdq7YP_EUZ8ehRRQx9t87wViwPuE8dRE/
 - **SQLite (optional)**: A lightweight database for storing user data (if implemented in the future).
 
 ---
-
-## Prerequisites
 
 ## Prerequisites
 
